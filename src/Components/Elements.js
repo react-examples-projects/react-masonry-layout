@@ -45,7 +45,8 @@ const Column = styled.div`
 `;
 
 const Item = styled.div`
-  background: #89b5af;
+  background: #32c1cd66;
+  border: 1px solid #32C1CD;
   margin: 0.3rem;
   border-radius: 5px;
   padding: 0.5rem;
