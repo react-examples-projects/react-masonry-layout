@@ -1,85 +1,61 @@
-import styled from "styled-components";
+import { ContainerDiv, Item, Column } from "./styled";
 import React, { useEffect, useState } from "react";
 import useMediaQuery from "./useMediaQuery";
 
-const ContainerDiv = styled.div`
-  display: flex;
-  width: ${(props) => props.width || null};
-  margin-left: ${(props) => (props.center ? "auto" : null)};
-  margin-right: ${(props) => (props.center ? "auto" : null)};
+const BREAKPOINTS = {
+  SM: 576,
+  MD: 768,
+  LG: 992,
+  XL: 1200,
+};
 
-  @media screen and (max-width: 992px) {
-    flex-wrap: wrap;
-  }
-
-  @media screen and (max-width: 612px) {
-    &:not(.ms-fluid) {
-      flex-wrap: wrap;
-    }
-  }
-`;
-
-const Column = styled.div`
-  box-sizing: border-box;
-  flex: 1 1 0;
-  display: flex;
-  align-self: flex-start;
-  flex-direction: column;
-
-  > img,
-  > figure {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-  }
-
-  @media screen and (max-width: 992px) {
-    flex-basis: 33.333%;
-  }
-
-  @media screen and (max-width: 612px) {
-    flex-basis: 100%;
-  }
-`;
-
-const Item = styled.div`
-  background: #32c1cd66;
-  border: 1px solid #32C1CD;
-  margin: 0.3rem;
-  border-radius: 5px;
-  padding: 0.5rem;
-`;
-
-const Container = ({ children, ...args }) => {
-  let indexColumn = 0;
+const Container = ({ breakpoints, children, ...args }) => {
   const [columns, setColumns] = useState([]);
-  const isTablet = useMediaQuery("max-width:720px");
-  const isMobile = useMediaQuery("max-width:560px");
+  const [columnsCount, setColumnsCount] = useState(3);
+  const widthPerColumn = (100 / columnsCount).toFixed(2);
+  console.log({ widthPerColumn, columnsCount });
+
+  const isSM = useMediaQuery(`(min-width:${BREAKPOINTS.SM}px)`);
+  const isMD = useMediaQuery(`(min-width:${BREAKPOINTS.MD}px)`);
+  const isLG = useMediaQuery(`(min-width:${BREAKPOINTS.LG}px)`);
+  const isXL = useMediaQuery(`(min-width:${BREAKPOINTS.XL}px)`);
 
   useEffect(() => {
-    const COLUMNS_COUNT = 3;
+    let indexColumn = 0;
     const columns = [];
 
-    for (let i = 0; i < COLUMNS_COUNT; i++) {
+    for (let i = 0; i < columnsCount; i++) {
       columns.push([]);
     }
 
     children.forEach((child) => {
       columns[indexColumn].push(child);
 
-      if (indexColumn < COLUMNS_COUNT) indexColumn++;
-      if (indexColumn >= COLUMNS_COUNT) indexColumn = 0;
+      if (indexColumn < columnsCount) indexColumn++;
+      if (indexColumn >= columnsCount) indexColumn = 0;
     });
 
     setColumns(columns);
-  }, [children, isTablet, isMobile]);
+  }, [children, columnsCount]);
+
+  useEffect(() => {
+    if (isXL) {
+      setColumnsCount(breakpoints.xl || 3);
+    } else if (isLG) {
+      setColumnsCount(breakpoints.lg || 3);
+    } else if (isMD) {
+      setColumnsCount(breakpoints.md || 2);
+    } else if (isSM) {
+      setColumnsCount(breakpoints.sm || 1);
+    } else {
+      setColumnsCount(1);
+    }
+  }, [isSM, isMD, isLG, isXL]);
 
   return (
     <ContainerDiv {...args}>
       {columns.map((column, index) => (
-        <Column key={index}>
+        <Column key={index} width={widthPerColumn}>
           {column.map((child, index) => (
             <Item key={index}>{child}</Item>
           ))}
