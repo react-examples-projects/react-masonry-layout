@@ -13,7 +13,7 @@ const Container = ({ breakpoints, children, ...args }) => {
   const [columns, setColumns] = useState([]);
   const [columnsCount, setColumnsCount] = useState(3);
   const widthPerColumn = (100 / columnsCount).toFixed(2);
-  const { xl, lg, md, sm } = breakpoints || {};
+  const { xl = 3, lg = 3, md = 2, sm = 1 } = breakpoints || {};
 
   const isSM = useMediaQuery(`(min-width:${BREAKPOINTS.SM}px)`);
   const isMD = useMediaQuery(`(min-width:${BREAKPOINTS.MD}px)`);
@@ -40,13 +40,13 @@ const Container = ({ breakpoints, children, ...args }) => {
 
   useEffect(() => {
     if (isXL) {
-      setColumnsCount(xl || 3);
+      setColumnsCount(xl);
     } else if (isLG) {
-      setColumnsCount(lg || 3);
+      setColumnsCount(lg);
     } else if (isMD) {
-      setColumnsCount(md || 2);
+      setColumnsCount(md);
     } else if (isSM) {
-      setColumnsCount(sm || 1);
+      setColumnsCount(sm);
     } else {
       setColumnsCount(1);
     }

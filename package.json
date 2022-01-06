@@ -1,7 +1,18 @@
 {
   "name": "react-masonry",
-  "version": "0.1.0",
+  "version": "1.0",
+  "description": "Create your own layouts with masonry grid",
   "private": true,
+  "author": "Libardo Rengifo <libardojesusrengifo129@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/react-examples-projects/react-masonry-layout.git",
+  "keywords": [
+    "react",
+    "masonry",
+    "grid",
+    "layout"
+  ],
+  "main": "dist/index.js",
   "dependencies": {
     "history": "^5.2.0",
     "react": "^17.0.2",
@@ -10,6 +21,13 @@
     "react-scripts": "^5.0.0",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "engines": {
+    "node": ">=10"
   },
   "scripts": {
     "start": "react-scripts start",
