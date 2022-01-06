@@ -6,8 +6,8 @@ function App() {
   const breakpoints = {
     sm: 2,
     md: 4,
-    lg: 7,
-    xl: 8,
+    lg: 5,
+    xl: 5,
   };
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <Container breakpoints={breakpoints}>
+      <Container >
         {posts.map((post) => (
           <Container.Column key={post.id}>
             <h5 className="title">

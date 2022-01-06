@@ -1,14 +1,7 @@
 import styled from "styled-components";
+import React from "react";
 
-export const ContainerDiv = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  width: ${(props) => props.width || null};
-  margin-left: ${(props) => (props.center ? "auto" : null)};
-  margin-right: ${(props) => (props.center ? "auto" : null)};
-`;
-
-export const Column = styled.div`
+const ContainerColumn = styled.div`
   box-sizing: border-box;
   flex: 0 0 ${(props) => `${props.width}%` || "auto"};
   max-width: ${(props) => `${props.width}%` || "auto"};
@@ -25,6 +18,18 @@ export const Column = styled.div`
     transition: all 0.3s ease;
   }
 `;
+
+export const ContainerDiv = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  width: ${(props) => props.width || null};
+  margin-left: ${(props) => (props.center ? "auto" : null)};
+  margin-right: ${(props) => (props.center ? "auto" : null)};
+`;
+
+export const Column = ({ width, children, ...args }) => {
+  return <ContainerColumn {...args}>{children}</ContainerColumn>;
+};
 
 export const Item = styled.div`
   margin: 0.3rem;
